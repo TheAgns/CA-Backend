@@ -18,5 +18,8 @@ Execute > git clone -b errorhandling git@github.com:dat3startcode/dat3-startcode
 *In order to use this code, you should have a local developer setup + a "matching" droplet on Digital Ocean as described in the 3. semester guidelines* 
 # Getting Started
 
+Link for youtubechannel provided:
+https://www.youtube.com/channel/UCn4wfjRqEIbuPiosOGFCwrw
+
 This document explains how to use this code (build, test and deploy), locally with maven, and remotely with maven controlled by Github actions
  - [How to use](https://docs.google.com/document/d/1rymrRWF3VVR7ujo3k3sSGD_27q73meGeiMYtmUtYt6c/edit?usp=sharing)
