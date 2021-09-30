@@ -6,10 +6,12 @@
 package facades;
 
 import dtos.PersonDTO;
-import dtos.RenameMeDTO;
+import entities.Hobby;
 import entities.Person;
-import entities.RenameMe;
+
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+
 import utils.EMF_Creator;
 
 /**
@@ -20,9 +22,19 @@ public class Populator {
     public static void populate(){
         EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
         PersonFacade fe = PersonFacade.getFacadeExample(emf);
-        fe.addPerson(new PersonDTO(new Person("Musti", "Tokmak","42212121")));
-        fe.addPerson(new PersonDTO(new Person("Mafhias", "Enemark","42212122")));
-        fe.addPerson(new PersonDTO(new Person("Markus", "Agnsgaard","422123212")));
+        EntityManager em = emf.createEntityManager();
+
+        Person person1 = new Person("Musti", "Tokmak","42212121");
+        Person person2 = new Person("Mafhias", "Enemark","42212122");
+        Person person3 = new Person("Markus", "Agnsgaard","422123212");
+        Hobby hobby1 = new Hobby("Fodbold","Spark til en rund bold");
+        Hobby hobby2 = new Hobby("Haandbold","Kast med en rund bold");
+        person1.addHobby(hobby1);
+        person2.addHobby(hobby2);
+        fe.addPerson(new PersonDTO(person1));
+        fe.addPerson(new PersonDTO(person2));
+        fe.addPerson(new PersonDTO(person3));
+
     }
     
     public static void main(String[] args) {

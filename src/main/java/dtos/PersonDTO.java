@@ -1,7 +1,7 @@
 package dtos;
 
+import entities.Hobby;
 import entities.Person;
-import entities.RenameMe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +11,7 @@ public class PersonDTO{
     private String firstName;
     private String lastName;
     private String phone;
+    List<Hobby> hobbies;
 
     public PersonDTO(){
 
@@ -20,6 +21,15 @@ public class PersonDTO{
         this.firstName = person.getFirstName();
         this.lastName = person.getLastName();
         this.phone = person.getPhone();
+        this.hobbies = person.getHobbies();
+    }
+
+    public List<Hobby> getHobbies() {
+        return hobbies;
+    }
+
+    public void setHobbies(List<Hobby> hobbies) {
+        this.hobbies = hobbies;
     }
 
     public Integer getId() {
