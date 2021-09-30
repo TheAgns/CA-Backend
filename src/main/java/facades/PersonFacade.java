@@ -39,7 +39,8 @@ public class PersonFacade {
 
 
     public PersonDTO addPerson(PersonDTO personDTO) {
-        Person person = new Person((personDTO.getFirstName()),personDTO.getLastName(),personDTO.getPhone());
+        Person person = new Person((personDTO.getFirstName()),personDTO.getLastName(),personDTO.getPhone(),personDTO.getHobbies());
+        System.out.println(person);
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();

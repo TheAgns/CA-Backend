@@ -29,6 +29,17 @@ public class Person {
         this.hobbies = new ArrayList<>();
     }
 
+    public Person(String firstName, String lastName, String phone, List<Hobby> hobbies) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phone = phone;
+        if (hobbies == null){
+            this.hobbies = new ArrayList<>();
+        } else {
+            this.hobbies = hobbies;
+        }
+    }
+
     public Person() {
 
     }
@@ -66,5 +77,18 @@ public class Person {
             this.hobbies.add(hobby);
             hobby.getPersons().add(this);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", address='" + address + '\'' +
+                ", hobbies=" + hobbies +
+                '}';
     }
 }

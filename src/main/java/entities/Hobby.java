@@ -14,7 +14,8 @@ public class Hobby {
     private String name;
     private String description;
 
-    @ManyToMany
+    @ManyToMany (cascade = CascadeType.PERSIST)
+   // @JoinColumn(name = "hobbies")
     private List<Person> persons;
 
 
@@ -49,5 +50,14 @@ public class Hobby {
 
     public void setPersons(List<Person> persons) {
         this.persons = persons;
+    }
+
+    @Override
+    public String toString() {
+        return "Hobby{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
 }

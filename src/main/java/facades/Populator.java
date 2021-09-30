@@ -31,6 +31,7 @@ public class Populator {
         Hobby hobby2 = new Hobby("Haandbold","Kast med en rund bold");
         person1.addHobby(hobby1);
         person2.addHobby(hobby2);
+        person2.addHobby(hobby1);
         fe.addPerson(new PersonDTO(person1));
         fe.addPerson(new PersonDTO(person2));
         fe.addPerson(new PersonDTO(person3));
