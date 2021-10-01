@@ -16,6 +16,10 @@ public class Address {
     @OneToMany(mappedBy = "address", cascade = CascadeType.PERSIST)
     List<Person> persons;
 
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="zip_code")
+    private CityInfo cityInfo;
+
     public void addPerson(Person person) {
         this.persons.add(person);
         if (person != null) {
@@ -63,5 +67,13 @@ public class Address {
 
     public void setPersons(List<Person> persons) {
         this.persons = persons;
+    }
+
+    public CityInfo getCityInfo() {
+        return cityInfo;
+    }
+
+    public void setCityInfo(CityInfo cityInfo) {
+        this.cityInfo = cityInfo;
     }
 }
