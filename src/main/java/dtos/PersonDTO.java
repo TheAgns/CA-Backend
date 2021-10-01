@@ -11,6 +11,7 @@ public class PersonDTO{
     private Integer id;
     private String firstName;
     private String lastName;
+    private String email;
     private List<Phone> phones;
     List<Hobby> hobbies;
 
@@ -25,8 +26,9 @@ public class PersonDTO{
     public PersonDTO(Person person) {
         this.firstName = person.getFirstName();
         this.lastName = person.getLastName();
-        this.phones = person.getPhones();
-        this.hobbies = person.getHobbies();
+        this.email = person.getEmail();
+        //this.phones = person.getPhones();
+       // this.hobbies = person.getHobbies();
     }
 
     public List<Hobby> getHobbies() {
@@ -62,14 +64,16 @@ public class PersonDTO{
     }
 
 
-
     @Override
     public String toString() {
         return "PersonDTO{" +
-                "firstName='" + firstName + '\'' +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
                 '}';
     }
+
     public static List<PersonDTO> getDtos(List<Person> rms){
         List<PersonDTO> rmdtos = new ArrayList();
         rms.forEach(rm->rmdtos.add(new PersonDTO(rm)));

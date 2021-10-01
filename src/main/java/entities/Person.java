@@ -13,8 +13,9 @@ public class Person {
     @Column(name = "p_id", nullable = false)
     private Integer p_id;
 
-    String firstName;
-    String lastName;
+    private String firstName;
+    private String lastName;
+    private String email;
 
     @OneToMany(mappedBy = "person", cascade = CascadeType.PERSIST)
     List<Phone> phones;
@@ -31,8 +32,6 @@ public class Person {
     }
 
 
-    String email;
-    //String address;
 
     @ManyToMany(mappedBy = "persons",  cascade = CascadeType.PERSIST)
     List<Hobby> hobbies = new ArrayList<>();
@@ -41,20 +40,16 @@ public class Person {
     @JoinColumn(name="address_id")
     private Address address;
 
-  /*  @ManyToMany
-    @JoinTable(
-            name = "link_person_hobby",
-            joinColumns = @JoinColumn(name = "p_id"),
-            inverseJoinColumns = @JoinColumn(name = "h_id")
-    )
-    private List<Hobby> hobbies;*/
-
-
-    public Person(String firstName, String lastName, String phone) {
+    public Person(String firstName, String lastName, String phone, String email) {
         this.firstName = firstName;
+        this.email = email;
         this.lastName = lastName;
         this.phones = new ArrayList<>();
         this.hobbies = new ArrayList<>();
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public Person(String firstName, String lastName, List<Phone> phones, List<Hobby> hobbies) {

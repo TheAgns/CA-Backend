@@ -38,6 +38,8 @@ public class PersonFacade {
     }
 
 
+
+
     public PersonDTO addPerson(PersonDTO personDTO) {
         Person person = new Person((personDTO.getFirstName()),personDTO.getLastName(),personDTO.getPhones(),personDTO.getHobbies());
         System.out.println(person);
@@ -72,5 +74,16 @@ public class PersonFacade {
         } finally {
             em.close();
         }
+    }
+
+    //Get all persons with a given hobby
+    //fodbold --> List person
+    public List<PersonDTO> getAllPersonsByHobby(String hobby){
+        EntityManager em = emf.createEntityManager();
+        List<Person> persons = em
+                .createQuery("SELECT p FROM Person p JOIN p.hobbies h WHERE h.name = :hobby", Person.class)
+                .setParameter("hobby", hobby)
+                .getResultList();
+        return PersonDTO.getDtos(persons);
     }
 }

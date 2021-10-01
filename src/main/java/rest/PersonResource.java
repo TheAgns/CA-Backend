@@ -10,6 +10,7 @@ import facades.PersonFacade;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
@@ -51,8 +52,19 @@ public class PersonResource {
     @Produces({MediaType.APPLICATION_JSON})
     public String getAll() {
         List<PersonDTO> persons = FACADE.getAllPersons();
-        System.out.println("persons = " + persons);
         return GSON.toJson(persons);
     }
+
+    @Path("/hobby/{name}")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public String getByHobby(@PathParam("name") String name ) {
+        List<PersonDTO> persons = FACADE.getAllPersonsByHobby(name);
+        return GSON.toJson(persons);
+    }
+
+
+
+
 }
 
