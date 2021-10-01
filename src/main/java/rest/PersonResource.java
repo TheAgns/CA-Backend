@@ -2,6 +2,7 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import dtos.PersonDTO;
 import entities.Person;
 import facades.Populator;
 import utils.EMF_Creator;
@@ -17,10 +18,10 @@ import java.util.List;
 @Path("xxx")
 public class PersonResource {
 
-    private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();
+    private final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();
 
-    private static final PersonFacade FACADE =  PersonFacade.getFacadeExample(EMF);
-    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
+    private final PersonFacade FACADE =  PersonFacade.getFacadeExample(EMF);
+    private final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     @GET
     @Produces({MediaType.APPLICATION_JSON})
@@ -43,6 +44,15 @@ public class PersonResource {
 
         Populator.populate();
         return "Musti have been populated";
+    }
+
+    @Path("all")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public String getAll() {
+        List<PersonDTO> persons = FACADE.getAllPersons();
+        System.out.println("persons = " + persons);
+        return GSON.toJson(persons);
     }
 }
 
