@@ -10,8 +10,8 @@ import java.util.List;
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Integer id;
+    @Column(name = "p_id", nullable = false)
+    private Integer p_id;
 
     String firstName;
     String lastName;
@@ -19,8 +19,18 @@ public class Person {
     String email;
     String address;
 
-    @ManyToMany(mappedBy = "persons", cascade = CascadeType.PERSIST)
-    List<Hobby> hobbies;
+    @ManyToMany(mappedBy = "persons",  cascade = CascadeType.PERSIST)
+    List<Hobby> hobbies = new ArrayList<>();
+
+
+  /*  @ManyToMany
+    @JoinTable(
+            name = "link_person_hobby",
+            joinColumns = @JoinColumn(name = "p_id"),
+            inverseJoinColumns = @JoinColumn(name = "h_id")
+    )
+    private List<Hobby> hobbies;*/
+
 
     public Person(String firstName, String lastName, String phone) {
         this.firstName = firstName;
@@ -82,7 +92,7 @@ public class Person {
     @Override
     public String toString() {
         return "Person{" +
-                "id=" + id +
+                "id=" + p_id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", phone='" + phone + '\'' +

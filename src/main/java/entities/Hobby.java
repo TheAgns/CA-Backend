@@ -9,14 +9,16 @@ import java.util.List;
 public class Hobby {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Integer id;
+    @Column(name = "h_id", nullable = false)
+    private Integer h_id;
     private String name;
     private String description;
 
-    @ManyToMany (cascade = CascadeType.PERSIST)
-   // @JoinColumn(name = "hobbies")
+    @ManyToMany
     private List<Person> persons;
+
+ /*   @ManyToMany(mappedBy = "hobbies",  cascade = CascadeType.PERSIST)
+    List<Person> persons = new ArrayList<>();*/
 
 
     public Hobby(String name, String description) {
@@ -55,7 +57,7 @@ public class Hobby {
     @Override
     public String toString() {
         return "Hobby{" +
-                "id=" + id +
+                "id=" + h_id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 '}';

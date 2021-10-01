@@ -32,9 +32,15 @@ public class Populator {
         person1.addHobby(hobby1);
         person2.addHobby(hobby2);
         person2.addHobby(hobby1);
-        fe.addPerson(new PersonDTO(person1));
+
+        em.getTransaction().begin();
+        em.persist(person1);
+        em.persist(person2);
+        em.getTransaction().commit();
+
+       /* fe.addPerson(new PersonDTO(person1));
         fe.addPerson(new PersonDTO(person2));
-        fe.addPerson(new PersonDTO(person3));
+        fe.addPerson(new PersonDTO(person3));*/
 
     }
     
