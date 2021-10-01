@@ -15,7 +15,21 @@ public class Person {
 
     String firstName;
     String lastName;
-    String phone; //Phone phone
+
+    @OneToMany(mappedBy = "person", cascade = CascadeType.PERSIST)
+    List<Phone> phones;
+
+    public List<Phone> getPhones() {
+        return phones;
+    }
+
+    public void addPhone(Phone phone) {
+        this.phones.add(phone);
+        if(phone != null){
+            phone.setPerson(this);
+        }
+    }
+
     String email;
     String address;
 
@@ -35,14 +49,14 @@ public class Person {
     public Person(String firstName, String lastName, String phone) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.phone = phone;
+        this.phones = new ArrayList<>();
         this.hobbies = new ArrayList<>();
     }
 
-    public Person(String firstName, String lastName, String phone, List<Hobby> hobbies) {
+    public Person(String firstName, String lastName, List<Phone> phones, List<Hobby> hobbies) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.phone = phone;
+        this.phones = new ArrayList<>();
         if (hobbies == null){
             this.hobbies = new ArrayList<>();
         } else {
@@ -78,9 +92,7 @@ public class Person {
         this.hobbies = hobbies;
     }
 
-    public String getPhone() {
-        return phone;
-    }
+
 
     public void addHobby(Hobby hobby){
         if(hobby != null) {
@@ -95,7 +107,6 @@ public class Person {
                 "id=" + p_id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", phone='" + phone + '\'' +
                 ", email='" + email + '\'' +
                 ", address='" + address + '\'' +
                 ", hobbies=" + hobbies +

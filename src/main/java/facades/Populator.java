@@ -12,6 +12,7 @@ import entities.Person;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
+import entities.Phone;
 import utils.EMF_Creator;
 
 /**
@@ -32,6 +33,9 @@ public class Populator {
         person1.addHobby(hobby1);
         person2.addHobby(hobby2);
         person2.addHobby(hobby1);
+        person1.addPhone(new Phone("21212121","hjemme telf"));
+        person1.addPhone(new Phone("123123123","priv telf"));
+        person2.addPhone(new Phone("1111111","hej telf"));
 
         em.getTransaction().begin();
         em.persist(person1);

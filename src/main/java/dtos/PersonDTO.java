@@ -2,6 +2,7 @@ package dtos;
 
 import entities.Hobby;
 import entities.Person;
+import entities.Phone;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,17 +11,21 @@ public class PersonDTO{
     private Integer id;
     private String firstName;
     private String lastName;
-    private String phone;
+    private List<Phone> phones;
     List<Hobby> hobbies;
 
     public PersonDTO(){
 
     }
 
+    public List<Phone> getPhones() {
+        return phones;
+    }
+
     public PersonDTO(Person person) {
         this.firstName = person.getFirstName();
         this.lastName = person.getLastName();
-        this.phone = person.getPhone();
+        this.phones = person.getPhones();
         this.hobbies = person.getHobbies();
     }
 
@@ -56,20 +61,13 @@ public class PersonDTO{
         this.lastName = lastName;
     }
 
-    public String getPhone() {
-        return phone;
-    }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
 
     @Override
     public String toString() {
         return "PersonDTO{" +
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", phone='" + phone + '\'' +
                 '}';
     }
     public static List<PersonDTO> getDtos(List<Person> rms){
