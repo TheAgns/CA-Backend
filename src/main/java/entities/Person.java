@@ -30,12 +30,16 @@ public class Person {
         }
     }
 
+
     String email;
-    String address;
+    //String address;
 
     @ManyToMany(mappedBy = "persons",  cascade = CascadeType.PERSIST)
     List<Hobby> hobbies = new ArrayList<>();
 
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="address_id")
+    private Address address;
 
   /*  @ManyToMany
     @JoinTable(
@@ -111,5 +115,13 @@ public class Person {
                 ", address='" + address + '\'' +
                 ", hobbies=" + hobbies +
                 '}';
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }
