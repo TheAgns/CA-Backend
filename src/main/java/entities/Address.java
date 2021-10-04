@@ -12,7 +12,7 @@ public class Address {
     private Integer id;
     private String street;
     private String additionalInfo;
-
+//actions test mat
     @OneToMany(mappedBy = "address", cascade = CascadeType.PERSIST)
     List<Person> persons;
 
