@@ -8,10 +8,7 @@ import facades.Populator;
 import utils.EMF_Creator;
 import facades.PersonFacade;
 import javax.persistence.EntityManagerFactory;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
@@ -55,6 +52,18 @@ public class PersonResource {
         return GSON.toJson(persons);
     }
 
+    @POST
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    public String addPerson(String person) {
+
+        PersonDTO personDTO = GSON.fromJson(person,PersonDTO.class);
+        PersonDTO personDTO1 = FACADE.addPerson(personDTO);
+
+        return GSON.toJson(personDTO1);
+    }
+
+    //Get all persons with a given hobby
     @Path("/hobby/{name}")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
@@ -63,7 +72,13 @@ public class PersonResource {
         return GSON.toJson(persons);
     }
 
+    //Get information about a person (address, hobbies etc) given a phone number
 
+    //Get all persons living in a given city (i.e. 2800 Lyngby)
+    //Get the number of people with a given hobby
+    //Get a list of all zip codes in Denmark
+    //Create new Persons
+    //Edit Persons
 
 
 }

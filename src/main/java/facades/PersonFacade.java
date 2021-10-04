@@ -1,12 +1,17 @@
 package facades;
 
+import dtos.HobbyDTO;
 import dtos.PersonDTO;
+import dtos.PhoneDTO;
+import entities.Hobby;
 import entities.Person;
 
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
+
+import entities.Phone;
 import utils.EMF_Creator;
 
 public class PersonFacade {
@@ -41,8 +46,23 @@ public class PersonFacade {
 
 
     public PersonDTO addPerson(PersonDTO personDTO) {
-        Person person = new Person((personDTO.getFirstName()),personDTO.getLastName(),personDTO.getPhones(),personDTO.getHobbies());
-        System.out.println(person);
+        Person person = new Person(personDTO.getFirstName(),personDTO.getLastName(),personDTO.getEmail());
+
+        //adding Phone/phones
+        for (PhoneDTO phoneDTO: personDTO.getPhones()) {
+            Phone phone = new Phone(phoneDTO.getPhoneNumber(),phoneDTO.getDescription());
+            person.addPhone(phone);
+        }
+
+        //Adding hobby/hobbies
+        for (HobbyDTO hobbyDTO: personDTO.getHobbies()) {
+            Hobby hobby = new Hobby(hobbyDTO.getName(), hobbyDTO.getDescription());
+            person.addHobby(hobby);
+        }
+
+        //Adding Adress
+
+
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();

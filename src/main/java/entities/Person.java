@@ -52,15 +52,12 @@ public class Person {
         return email;
     }
 
-    public Person(String firstName, String lastName, List<Phone> phones, List<Hobby> hobbies) {
+    public Person(String firstName, String lastName, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.email = email;
         this.phones = new ArrayList<>();
-        if (hobbies == null){
-            this.hobbies = new ArrayList<>();
-        } else {
-            this.hobbies = hobbies;
-        }
+        this.hobbies = new ArrayList<>();
     }
 
     public Person() {
@@ -103,12 +100,13 @@ public class Person {
     @Override
     public String toString() {
         return "Person{" +
-                "id=" + p_id +
+                "p_id=" + p_id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
-                ", address='" + address + '\'' +
+                ", phones=" + phones +
                 ", hobbies=" + hobbies +
+                ", address=" + address +
                 '}';
     }
 

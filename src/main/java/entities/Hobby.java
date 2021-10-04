@@ -14,6 +14,10 @@ public class Hobby {
     private String name;
     private String description;
 
+    public Integer getH_id() {
+        return h_id;
+    }
+
     @ManyToMany
     private List<Person> persons;
 

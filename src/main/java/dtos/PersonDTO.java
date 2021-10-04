@@ -12,14 +12,18 @@ public class PersonDTO{
     private String firstName;
     private String lastName;
     private String email;
-    private List<Phone> phones;
-    List<Hobby> hobbies;
+    private List<PhoneDTO> phones;
+    List<HobbyDTO> hobbies;
+
+    public String getEmail() {
+        return email;
+    }
 
     public PersonDTO(){
 
     }
 
-    public List<Phone> getPhones() {
+    public List<PhoneDTO> getPhones() {
         return phones;
     }
 
@@ -27,15 +31,15 @@ public class PersonDTO{
         this.firstName = person.getFirstName();
         this.lastName = person.getLastName();
         this.email = person.getEmail();
-        //this.phones = person.getPhones();
+        this.phones = PhoneDTO.getFromList(person.getPhones());
        // this.hobbies = person.getHobbies();
     }
 
-    public List<Hobby> getHobbies() {
+    public List<HobbyDTO> getHobbies() {
         return hobbies;
     }
 
-    public void setHobbies(List<Hobby> hobbies) {
+    public void setHobbies(List<HobbyDTO> hobbies) {
         this.hobbies = hobbies;
     }
 
