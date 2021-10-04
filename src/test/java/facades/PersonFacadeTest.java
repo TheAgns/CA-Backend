@@ -95,8 +95,8 @@ public class PersonFacadeTest {
         assertEquals(2,personDTOS.size());
 
         //TODO: bliver persisted i forskellige rækkefølge.
-       // String firstnamePerson1 = personDTOS.get(0).getFirstName();
-        //assertEquals("Mathias",firstnamePerson1);
+       String firstnamePerson1 = personDTOS.get(0).getFirstName();
+       assertEquals("Mathias",firstnamePerson1);
     }
 
 

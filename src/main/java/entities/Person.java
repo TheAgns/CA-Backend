@@ -39,7 +39,7 @@ public class Person {
 
 
 
-    @ManyToMany(mappedBy = "persons",  cascade = CascadeType.PERSIST)
+    @ManyToMany(mappedBy = "persons",  cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
     List<Hobby> hobbies = new ArrayList<>();
 
     @ManyToOne(fetch=FetchType.LAZY)
