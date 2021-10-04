@@ -7,6 +7,12 @@ import java.util.List;
 
 @Table(name = "person")
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "Person.deleteAllRows", query = "DELETE from Person "),
+        @NamedQuery(name = "Person.getAll", query = "SELECT p FROM Person p"),
+        @NamedQuery(name = "Person.getByName", query = "SELECT p FROM Person p WHERE p.firstName LIKE :firstName")
+})
+
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

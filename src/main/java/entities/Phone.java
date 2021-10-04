@@ -3,6 +3,11 @@ package entities;
 import javax.persistence.*;
 
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "Phone.deleteAllRows", query = "DELETE from Phone "),
+        @NamedQuery(name = "Phone.getAll", query = "SELECT p FROM Phone p"),
+        @NamedQuery(name = "Phone.getByNumber", query = "SELECT p FROM Phone p WHERE p.phoneNumber LIKE :phoneNumber")
+})
 public class Phone {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
