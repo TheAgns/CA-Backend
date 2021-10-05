@@ -79,6 +79,27 @@ public class PersonResource {
     //Get a list of all zip codes in Denmark
     //Create new Persons
     //Edit Persons
+    @Path("/city/{zipCode}")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public String getByZip(@PathParam("zipCode") String zipCode ) {
+        List<PersonDTO> persons = FACADE.getPersonsByZip(zipCode);
+        return GSON.toJson(persons);
+    }
+    @Path("/person/{id}")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public String getPersonById(@PathParam("id") Integer id ) {
+        PersonDTO personDTO = FACADE.getPersonById(id);
+        return GSON.toJson(personDTO);
+    }
+    @Path("/phone/{number}")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public String getPersonByNumber(@PathParam("number") String number ) {
+        PersonDTO personDTO = FACADE.getPersonByNumber(number);
+        return GSON.toJson(personDTO);
+    }
 
 
 }

@@ -9,7 +9,9 @@ import entities.*;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
+import javax.ws.rs.WebApplicationException;
 
 import utils.EMF_Creator;
 
@@ -122,4 +124,47 @@ public class PersonFacade {
                 .getResultList();
         return PersonDTO.getDtos(persons);
     }
+    public PersonDTO getPersonByNumber(String number) throws WebApplicationException {
+        EntityManager em = getEntityManager();
+
+        try {
+            Person person = em
+                    .createQuery("SELECT p FROM Person p JOIN p.phones phone WHERE phone.phoneNumber = :number", Person.class)
+                    .setParameter("number", number)
+                    .getSingleResult();
+            return new PersonDTO(person);
+        } catch (NoResultException e) {
+            throw new WebApplicationException("No number" + number, 404);
+        }
+    }
+    public PersonDTO getPersonById(Integer id) throws WebApplicationException {
+        EntityManager em = getEntityManager();
+
+        try {
+            Person person = em
+                    .createQuery("SELECT p FROM Person p WHERE p.p_id = :id", Person.class)
+                    .setParameter("id", id)
+                    .getSingleResult();
+            return new PersonDTO(person);
+        } catch (NoResultException e) {
+            throw new WebApplicationException("No person on the given ID" + id, 404);
+        }
+    }
+    public List<PersonDTO> getPersonsByZip(String zipCode) throws WebApplicationException {
+        EntityManager em = emf.createEntityManager();
+        try {
+            List<Person> persons = em
+                    .createQuery("SELECT p FROM Person p JOIN p.address a JOIN a.cityInfo c WHERE c.zipCode = :zipCode", Person.class)
+                    .setParameter("zipCode", zipCode)
+                    .getResultList();
+            if (persons.isEmpty()) {
+                throw new WebApplicationException(String.format("City with zip: (%S) not found", zipCode), 404);
+            }
+            return PersonDTO.getDtos(persons);
+        } finally {
+            em.close();
+        }
+    }
+
+
 }
