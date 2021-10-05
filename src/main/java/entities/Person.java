@@ -58,6 +58,10 @@ public class Person {
         return email;
     }
 
+    public Integer getP_id() {
+        return p_id;
+    }
+
     public Person(String firstName, String lastName, String email) {
         this.firstName = firstName;
         this.lastName = lastName;

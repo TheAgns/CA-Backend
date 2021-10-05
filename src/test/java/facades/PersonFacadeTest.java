@@ -20,6 +20,7 @@ public class PersonFacadeTest {
 
     private static EntityManagerFactory emf;
     private static PersonFacade facade;
+    Person person1;
 
     public PersonFacadeTest() {
     }
@@ -47,7 +48,7 @@ public class PersonFacadeTest {
             em.createNamedQuery("Person.deleteAllRows").executeUpdate();
 
             //creating persons
-            Person person1 = new Person("Mathias", "Poulsen","mat@gmail.com");
+            person1 = new Person("Mathias", "Poulsen","mat@gmail.com");
             Person person2 = new Person("Mustafa", "Tokmak","musti@gmail.com");
             Person person3 = new Person("Mathias", "Poulsen","mark@gmail.com");
 
@@ -95,8 +96,8 @@ public class PersonFacadeTest {
         assertEquals(2,personDTOS.size());
 
         //TODO: bliver persisted i forskellige rækkefølge.
-       String firstnamePerson1 = personDTOS.get(0).getFirstName();
-       assertEquals("Mathias",firstnamePerson1);
+       PersonDTO personDTO = facade.getPerson(person1.getP_id());
+       assertEquals("Mathias",personDTO.getFirstName());
     }
 
 
