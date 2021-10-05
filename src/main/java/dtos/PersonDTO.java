@@ -14,6 +14,15 @@ public class PersonDTO{
     private String email;
     private List<PhoneDTO> phones;
     List<HobbyDTO> hobbies;
+    private AddressDTO address;
+
+    public AddressDTO getAddress() {
+        return address;
+    }
+
+    public void setAddress(AddressDTO address) {
+        this.address = address;
+    }
 
     public String getEmail() {
         return email;
@@ -32,7 +41,8 @@ public class PersonDTO{
         this.lastName = person.getLastName();
         this.email = person.getEmail();
         this.phones = PhoneDTO.getFromList(person.getPhones());
-       // this.hobbies = person.getHobbies();
+        this.hobbies = HobbyDTO.getFromList(person.getHobbies());
+        this.address = new AddressDTO(person.getAddress());
     }
 
     public List<HobbyDTO> getHobbies() {
@@ -75,6 +85,9 @@ public class PersonDTO{
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
+                ", phones=" + phones +
+                ", hobbies=" + hobbies +
+                ", adress=" + address +
                 '}';
     }
 

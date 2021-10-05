@@ -37,22 +37,25 @@ public class Person {
         }
     }
 
+    public void setAddress(Address address){
+        this.address = address;
+      //  if (address != null){
+          //  this.address = address;
+           // address.getPersons().add(this);
+     //   }
+    }
+
+
+
+
 
 
     @ManyToMany(mappedBy = "persons",  cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
     List<Hobby> hobbies = new ArrayList<>();
 
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="address_id")
+    @ManyToOne
+    //@JoinColumn(name="address_id")
     private Address address;
-
-    public Person(String firstName, String lastName, String phone, String email) {
-        this.firstName = firstName;
-        this.email = email;
-        this.lastName = lastName;
-        this.phones = new ArrayList<>();
-        this.hobbies = new ArrayList<>();
-    }
 
     public String getEmail() {
         return email;
@@ -68,6 +71,7 @@ public class Person {
         this.email = email;
         this.phones = new ArrayList<>();
         this.hobbies = new ArrayList<>();
+        this.address = null;
     }
 
     public Person() {
@@ -122,9 +126,5 @@ public class Person {
 
     public Address getAddress() {
         return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
     }
 }

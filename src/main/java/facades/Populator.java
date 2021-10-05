@@ -23,9 +23,9 @@ public class Populator {
         PersonFacade fe = PersonFacade.getFacadeExample(emf);
         EntityManager em = emf.createEntityManager();
 
-        Person person1 = new Person("Musti", "Tokmak","42212121","mus@gmail.com");
-        Person person2 = new Person("Mafhias", "Enemark","42212122","mat@gmail.com");
-        Person person3 = new Person("Markus", "Agnsgaard","422123212","mark@gmail.com");
+        Person person1 = new Person("Musti", "Tokmak","mus@gmail.com");
+        Person person2 = new Person("Mafhias", "Enemark","mat@gmail.com");
+        Person person3 = new Person("Markus", "Agnsgaard","mark@gmail.com");
 
         Hobby hobby1 = new Hobby("Fodbold","Spark til en rund bold");
         Hobby hobby2 = new Hobby("Haandbold","Kast med en rund bold");

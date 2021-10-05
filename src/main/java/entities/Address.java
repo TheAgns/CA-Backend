@@ -13,10 +13,10 @@ public class Address {
     private String street;
     private String additionalInfo;
 //actions test mat
-    @OneToMany(mappedBy = "address", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "address", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     List<Person> persons;
 
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name="zip_code")
     private CityInfo cityInfo;
 
@@ -34,6 +34,13 @@ public class Address {
         this.street = street;
         this.additionalInfo = additionalInfo;
         this.persons = new ArrayList<>();
+    }
+
+    public void setCityInfo(CityInfo cityInfo){
+        if (cityInfo != null){
+            this.cityInfo = cityInfo;
+            cityInfo.getAddressList().add(this);
+        }
     }
 
     public String getStreet() {
@@ -73,7 +80,13 @@ public class Address {
         return cityInfo;
     }
 
-    public void setCityInfo(CityInfo cityInfo) {
-        this.cityInfo = cityInfo;
+    @Override
+    public String toString() {
+        return "Address{" +
+                "id=" + id +
+                ", street='" + street + '\'' +
+                ", additionalInfo='" + additionalInfo + '\'' +
+                ", cityInfo=" + cityInfo +
+                '}';
     }
 }

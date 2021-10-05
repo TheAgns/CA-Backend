@@ -1,17 +1,16 @@
 package facades;
 
+import dtos.AddressDTO;
 import dtos.HobbyDTO;
 import dtos.PersonDTO;
 import dtos.PhoneDTO;
-import entities.Hobby;
-import entities.Person;
+import entities.*;
 
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
 
-import entities.Phone;
 import utils.EMF_Creator;
 
 public class PersonFacade {
@@ -46,6 +45,7 @@ public class PersonFacade {
 
 
     public PersonDTO addPerson(PersonDTO personDTO) {
+        EntityManager em = emf.createEntityManager();
         Person person = new Person(personDTO.getFirstName(),personDTO.getLastName(),personDTO.getEmail());
 
         //adding Phone/phones
@@ -60,13 +60,29 @@ public class PersonFacade {
             person.addHobby(hobby);
         }
 
+
+        System.out.println(personDTO);
         //Adding Adress
+        Address address = new Address(personDTO.getAddress().getStreet(),personDTO.getAddress().getAdditionalInfo());
+
+        //adding CityInfo
+        CityInfo cityInfo = new CityInfo(personDTO.getAddress().getCityInfoDTO().getZipCode(),personDTO.getAddress().getCityInfoDTO().getCity());
+
+        address.addPerson(person);
+        //address.setCityInfo(cityInfo);
+        cityInfo.addAddress(address);
 
 
-        EntityManager em = emf.createEntityManager();
+
         try {
             em.getTransaction().begin();
-            em.persist(person);
+            em.persist(cityInfo);
+          //  address.setCityInfo(cityInfo);
+           // em.persist(address);
+           // em.merge(address);
+           // em.persist(person);
+           // person.setAddress(address);
+           // em.merge(person);
             em.getTransaction().commit();
         } finally {
             em.close();
