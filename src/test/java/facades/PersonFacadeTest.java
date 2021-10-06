@@ -1,9 +1,7 @@
 package facades;
 
 import dtos.PersonDTO;
-import entities.Hobby;
-import entities.Person;
-import entities.Phone;
+import entities.*;
 import org.junit.jupiter.api.*;
 import utils.EMF_Creator;
 
@@ -62,10 +60,23 @@ public class PersonFacadeTest {
             person2.addHobby(new Hobby("fodbold","spark til en bold"));
             person3.addHobby(new Hobby("basketball","kast med bold i en kurv"));
 
+            //Creating new addresses
+            Address address1 = new Address("Slangevej", "Den er farlig");
+            Address address2 = new Address("Slangegade", "Den er ufarlig");
+
+            //Adding CityInfo
+            CityInfo cityInfo1 = new CityInfo("2860","Soeborg");
+            CityInfo cityInfo2 = new CityInfo("3400","Hilleroed");
+
+            address1.addPerson(person1);
+            address2.addPerson(person2);
+            address1.addPerson(person3);
+            cityInfo1.addAddress(address1);
+            cityInfo2.addAddress(address2);
+
             //persist test persons
-            em.persist(person1);
-            em.persist(person2);
-            em.persist(person3);
+            em.persist(cityInfo1);
+            em.persist(cityInfo2);
 
             em.getTransaction().commit();
         } finally {

@@ -97,11 +97,16 @@ public class PersonFacade {
         return new PersonDTO(em.find(Person.class, id));
     }
 
-    public List<PersonDTO> getAllPersons() {
+    public List<PersonDTO> getAllPersons() throws WebApplicationException{
         EntityManager em = emf.createEntityManager();
-        TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p", Person.class);
-        List<Person> rms = query.getResultList();
-        return PersonDTO.getDtos(rms);
+        try {
+            TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p", Person.class);
+            List<Person> rms = query.getResultList();
+            return PersonDTO.getDtos(rms);
+        }catch (NoResultException e){
+            throw new WebApplicationException("No persons to be shown", 404);
+
+        }
     }
 
     public long getPersonCount(){
@@ -116,17 +121,20 @@ public class PersonFacade {
 
     //Get all persons with a given hobby
     //fodbold --> List person
-    public List<PersonDTO> getAllPersonsByHobby(String hobby){
+    public List<PersonDTO> getAllPersonsByHobby(String hobby) throws WebApplicationException{
         EntityManager em = emf.createEntityManager();
-        List<Person> persons = em
-                .createQuery("SELECT p FROM Person p JOIN p.hobbies h WHERE h.name = :hobby", Person.class)
-                .setParameter("hobby", hobby)
-                .getResultList();
-        return PersonDTO.getDtos(persons);
+        try {
+            List<Person> persons = em
+                    .createQuery("SELECT p FROM Person p JOIN p.hobbies h WHERE h.name = :hobby", Person.class)
+                    .setParameter("hobby", hobby)
+                    .getResultList();
+            return PersonDTO.getDtos(persons);
+        }catch(NoResultException e){
+            throw new WebApplicationException("No person with the given hobby" + hobby, 404);
+        }
     }
     public PersonDTO getPersonByNumber(String number) throws WebApplicationException {
         EntityManager em = getEntityManager();
-
         try {
             Person person = em
                     .createQuery("SELECT p FROM Person p JOIN p.phones phone WHERE phone.phoneNumber = :number", Person.class)
