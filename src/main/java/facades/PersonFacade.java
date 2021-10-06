@@ -3,6 +3,7 @@ package facades;
 import dtos.*;
 import entities.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -75,11 +76,19 @@ public class PersonFacade {
         try {
             em.getTransaction().begin();
             List<CityInfoDTO> allCityInfos = getAllCityInfos();
-            if (allCityInfos.contains(cityInfo.getZipCode())){
+            //skal ændres
+            List<String> allCityInfoZipCodes = new ArrayList<>();
+
+            for (CityInfoDTO cityInfoDTO: allCityInfos) {
+                allCityInfoZipCodes.add(cityInfoDTO.getZipCode());
+            }
+
+            if (allCityInfoZipCodes.contains(cityInfo.getZipCode())){
                 em.persist(address);
             }else {
-                em.persist(cityInfo);
+            em.persist(cityInfo);
             }
+
 
           //  address.setCityInfo(cityInfo);
            // em.persist(address);
