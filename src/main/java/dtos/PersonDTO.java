@@ -32,6 +32,34 @@ public class PersonDTO{
 
     }
 
+    public PersonDTO(String firstName, String lastName, String email, List<PhoneDTO> phones, List<HobbyDTO> hobbies, AddressDTO address) {
+        this.id = -1;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phones = phones;
+        this.hobbies = hobbies;
+        this.address = address;
+    }
+
+    public PersonDTO(String firstName, String lastName, String email) {
+        this.id = -1; // er det blevet persistet?
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phones = new ArrayList<PhoneDTO>();
+        this.hobbies = new ArrayList<HobbyDTO>();
+        this.address = null;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPhones(List<PhoneDTO> phones) {
+        this.phones = phones;
+    }
+
     public List<PhoneDTO> getPhones() {
         return phones;
     }
