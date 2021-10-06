@@ -2,6 +2,7 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import dtos.CityInfoDTO;
 import dtos.PersonDTO;
 import entities.Person;
 import facades.Populator;
@@ -99,6 +100,13 @@ public class PersonResource {
     public String getPersonByNumber(@PathParam("number") String number ) {
         PersonDTO personDTO = FACADE.getPersonByNumber(number);
         return GSON.toJson(personDTO);
+    }
+    @Path("city")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    public String getAllCityInfos() {
+        List<CityInfoDTO> cityInfoDTOS = FACADE.getAllCityInfos();
+        return GSON.toJson(cityInfoDTOS);
     }
 
 

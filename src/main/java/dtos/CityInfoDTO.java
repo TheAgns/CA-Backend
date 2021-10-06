@@ -2,6 +2,10 @@ package dtos;
 
 import entities.Address;
 import entities.CityInfo;
+import entities.Person;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CityInfoDTO {
     private String city;
@@ -26,5 +30,10 @@ public class CityInfoDTO {
 
     public void setZipcode(String zipcode) {
         this.zipCode = zipcode;
+    }
+    public static List<CityInfoDTO> getDtos(List<CityInfo> cityInfos){
+        List<CityInfoDTO> cityInfoDTOS = new ArrayList();
+        cityInfos.forEach(rm->cityInfoDTOS.add(new CityInfoDTO(rm)));
+        return cityInfoDTOS;
     }
 }

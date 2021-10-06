@@ -91,9 +91,9 @@ public class PersonDTO{
                 '}';
     }
 
-    public static List<PersonDTO> getDtos(List<Person> rms){
-        List<PersonDTO> rmdtos = new ArrayList();
-        rms.forEach(rm->rmdtos.add(new PersonDTO(rm)));
-        return rmdtos;
+    public static List<PersonDTO> getDtos(List<Person> personList){
+        List<PersonDTO> personDTOS = new ArrayList();
+        personList.forEach(rm->personDTOS.add(new PersonDTO(rm)));
+        return personDTOS;
     }
 }

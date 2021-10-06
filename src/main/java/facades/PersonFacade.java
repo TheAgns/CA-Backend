@@ -1,9 +1,6 @@
 package facades;
 
-import dtos.AddressDTO;
-import dtos.HobbyDTO;
-import dtos.PersonDTO;
-import dtos.PhoneDTO;
+import dtos.*;
 import entities.*;
 
 import java.util.List;
@@ -75,10 +72,15 @@ public class PersonFacade {
         cityInfo.addAddress(address);
 
 
-
         try {
             em.getTransaction().begin();
-            em.persist(cityInfo);
+            List<CityInfoDTO> allCityInfos = getAllCityInfos();
+            if (allCityInfos.contains(cityInfo.getZipCode())){
+                em.persist(address);
+            }else {
+                em.persist(cityInfo);
+            }
+
           //  address.setCityInfo(cityInfo);
            // em.persist(address);
            // em.merge(address);
@@ -101,8 +103,8 @@ public class PersonFacade {
         EntityManager em = emf.createEntityManager();
         try {
             TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p", Person.class);
-            List<Person> rms = query.getResultList();
-            return PersonDTO.getDtos(rms);
+            List<Person> persons = query.getResultList();
+            return PersonDTO.getDtos(persons);
         }catch (NoResultException e){
             throw new WebApplicationException("No persons to be shown", 404);
 
@@ -171,6 +173,17 @@ public class PersonFacade {
             return PersonDTO.getDtos(persons);
         } finally {
             em.close();
+        }
+    }
+    public List <CityInfoDTO> getAllCityInfos() throws WebApplicationException{
+        EntityManager em = emf.createEntityManager();
+        try {
+            TypedQuery<CityInfo> query = em.createQuery("SELECT c FROM CityInfo c", CityInfo.class);
+            List<CityInfo> cityInfos = query.getResultList();
+            return CityInfoDTO.getDtos(cityInfos);
+        }catch (NoResultException e){
+            throw new WebApplicationException("No persons to be shown", 404);
+
         }
     }
 
