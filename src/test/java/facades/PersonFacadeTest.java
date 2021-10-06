@@ -108,10 +108,25 @@ public class PersonFacadeTest {
         List<PersonDTO> personDTOS = facade.getAllPersonsByHobby("fodbold");
         assertEquals(2,personDTOS.size());
 
-        //TODO: bliver persisted i forskellige rækkefølge.
        PersonDTO personDTO = facade.getPerson(person1.getP_id());
        assertEquals("Mathias",personDTO.getFirstName());
     }
 
+    @Test
+    void getPersonByNumber() {//phone number
+        PersonDTO personDTO = facade.getPersonByNumber("11223344");
+        assertEquals("Mathias",personDTO.getFirstName());
+    }
 
+    @Test
+    void getPersonById() {
+        PersonDTO personDTO = facade.getPerson(person1.getP_id());//sikre personens id
+        assertEquals("Slangevej",personDTO.getAddress().getStreet());
+    }
+
+    @Test
+    void getPersonsByZip() {
+        List<PersonDTO> personDTOS = facade.getPersonsByZip("2860");
+        assertEquals(2,personDTOS.size());
+    }
 }
