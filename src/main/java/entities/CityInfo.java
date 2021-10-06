@@ -7,6 +7,11 @@ import java.util.List;
 
 @Table(name = "city_info")
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "CityInfo.deleteAllRows", query = "DELETE from CityInfo "),
+        @NamedQuery(name = "CityInfo.getAll", query = "SELECT c FROM CityInfo c"),
+        @NamedQuery(name = "CityInfo.getByName", query = "SELECT c FROM CityInfo c WHERE c.city LIKE :city")
+})
 public class CityInfo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

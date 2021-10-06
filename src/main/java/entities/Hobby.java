@@ -9,7 +9,7 @@ import java.util.List;
 @NamedQueries({
         @NamedQuery(name = "Hobby.deleteAllRows", query = "DELETE from Hobby "),
         @NamedQuery(name = "Hobby.getAll", query = "SELECT h FROM Hobby h"),
-        @NamedQuery(name = "Hoby.getByName", query = "SELECT h FROM Hobby h WHERE h.name LIKE :name")
+        @NamedQuery(name = "Hobby.getByName", query = "SELECT h FROM Hobby h WHERE h.name LIKE :name")
 })
 public class Hobby {
     @Id

@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "Address.deleteAllRows", query = "DELETE from Address "),
+        @NamedQuery(name = "Address.getAll", query = "SELECT a FROM Address a"),
+        @NamedQuery(name = "Address.getByName", query = "SELECT a FROM Address a WHERE a.street LIKE :street")
+})
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

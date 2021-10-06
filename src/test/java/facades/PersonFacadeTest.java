@@ -44,6 +44,8 @@ public class PersonFacadeTest {
             em.createNamedQuery("Phone.deleteAllRows").executeUpdate();
             em.createNamedQuery("Hobby.deleteAllRows").executeUpdate();
             em.createNamedQuery("Person.deleteAllRows").executeUpdate();
+            em.createNamedQuery("Address.deleteAllRows").executeUpdate();
+            em.createNamedQuery("CityInfo.deleteAllRows").executeUpdate();
 
             //creating persons
             person1 = new Person("Mathias", "Poulsen","mat@gmail.com");
