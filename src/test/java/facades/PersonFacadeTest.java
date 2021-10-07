@@ -1,5 +1,6 @@
 package facades;
 
+import dtos.CityInfoDTO;
 import dtos.PersonDTO;
 import entities.*;
 import org.junit.jupiter.api.*;
@@ -11,6 +12,7 @@ import javax.persistence.EntityManagerFactory;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 //Uncomment the line below, to temporarily disable this test
 //@Disabled
@@ -129,4 +131,10 @@ public class PersonFacadeTest {
         List<PersonDTO> personDTOS = facade.getPersonsByZip("2860");
         assertEquals(2,personDTOS.size());
     }
+    @Test
+    void getAllCity() {
+        List<CityInfoDTO> cityInfoDTO = facade.getAllCityInfos();
+        assertNotNull(cityInfoDTO);
+    }
+
 }
