@@ -49,28 +49,33 @@ public class PersonFacade {
         Person person = new Person(personDTO.getFirstName(),personDTO.getLastName(),personDTO.getEmail());
 
         //adding Phone/phones
-        for (PhoneDTO phoneDTO: personDTO.getPhones()) {
-            Phone phone = new Phone(phoneDTO.getPhoneNumber(),phoneDTO.getDescription());
-            person.addPhone(phone);
+        if(personDTO.getPhones() != null) {
+            for (PhoneDTO phoneDTO : personDTO.getPhones()) {
+                Phone phone = new Phone(phoneDTO.getPhoneNumber(), phoneDTO.getDescription());
+                person.addPhone(phone);
+            }
         }
 
         //Adding hobby/hobbies
-        for (HobbyDTO hobbyDTO: personDTO.getHobbies()) {
-            Hobby hobby = new Hobby(hobbyDTO.getName(), hobbyDTO.getDescription());
-            person.addHobby(hobby);
+        if(personDTO.getHobbies() != null) {
+            for (HobbyDTO hobbyDTO : personDTO.getHobbies()) {
+                Hobby hobby = new Hobby(hobbyDTO.getName(), hobbyDTO.getDescription());
+                person.addHobby(hobby);
+            }
         }
 
 
         System.out.println(personDTO);
         //Adding Adress
-        Address address = new Address(personDTO.getAddress().getStreet(),personDTO.getAddress().getAdditionalInfo());
+            Address address = new Address(personDTO.getAddress().getStreet(), personDTO.getAddress().getAdditionalInfo());
 
-        //adding CityInfo
-        CityInfo cityInfo = new CityInfo(personDTO.getAddress().getCityInfoDTO().getZipCode(),personDTO.getAddress().getCityInfoDTO().getCity());
+            //adding CityInfo
+            CityInfo cityInfo = new CityInfo(personDTO.getAddress().getCityInfoDTO().getZipCode(), personDTO.getAddress().getCityInfoDTO().getCity());
 
-        address.addPerson(person);
-        //address.setCityInfo(cityInfo);
-        cityInfo.addAddress(address);
+            address.addPerson(person);
+            //address.setCityInfo(cityInfo);
+            cityInfo.addAddress(address);
+
 
 
         try {
@@ -79,27 +84,29 @@ public class PersonFacade {
             //skal ændres
             List<String> allCityInfoZipCodes = new ArrayList<>();
 
-            for (CityInfoDTO cityInfoDTO: allCityInfos) {
+            for (CityInfoDTO cityInfoDTO : allCityInfos) {
                 allCityInfoZipCodes.add(cityInfoDTO.getZipCode());
             }
 
-            if (allCityInfoZipCodes.contains(cityInfo.getZipCode())){
+            if (allCityInfoZipCodes.contains(cityInfo.getZipCode())) {
                 em.persist(address);
-            }else {
-            em.persist(cityInfo);
+            } else {
+                em.persist(cityInfo);
             }
 
 
-          //  address.setCityInfo(cityInfo);
-           // em.persist(address);
-           // em.merge(address);
-           // em.persist(person);
-           // person.setAddress(address);
-           // em.merge(person);
+            //  address.setCityInfo(cityInfo);
+            // em.persist(address);
+            // em.merge(address);
+            // em.persist(person);
+            // person.setAddress(address);
+            // em.merge(person);
             em.getTransaction().commit();
+
         } finally {
             em.close();
         }
+
         return new PersonDTO(person);
     }
 
