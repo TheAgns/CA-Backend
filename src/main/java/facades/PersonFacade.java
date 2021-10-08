@@ -166,7 +166,7 @@ public class PersonFacade {
                     .getSingleResult();
             return new PersonDTO(person);
         } catch (NoResultException e) {
-            throw new WebApplicationException("No person on the given ID" + id, 404);
+            throw new WebApplicationException("No person on the given ID: " + id, 404);
         }
     }
     public List<PersonDTO> getPersonsByZip(String zipCode) throws WebApplicationException {

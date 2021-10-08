@@ -1,20 +1,28 @@
 package rest;
 
+import dtos.HobbyDTO;
+import dtos.PersonDTO;
 import entities.*;
+import io.restassured.http.ContentType;
 import org.junit.jupiter.api.*;
 import utils.EMF_Creator;
 import io.restassured.RestAssured;
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
+
 import io.restassured.parsing.Parser;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.grizzly.http.util.HttpStatus;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
-import static org.hamcrest.Matchers.equalTo;
 
 //Uncomment the line below, to temporarily disable this test
 //@Disabled
@@ -22,7 +30,7 @@ import static org.hamcrest.Matchers.equalTo;
 public class PersonResourceTest {
 
     private static final int SERVER_PORT = 7777;
-    private static final String SERVER_URL = "http://localhost:8080/devops_starter_war_exploded/api/xxx";
+    private static final String SERVER_URL = "http://localhost:8080/devops_starter_war_exploded/api";
     private static Person p1, p2;
 
     static final URI BASE_URI = UriBuilder.fromUri(SERVER_URL).port(SERVER_PORT).build();
@@ -129,13 +137,26 @@ public class PersonResourceTest {
     }
     @Test
     public void testPersonById() {
-        given().log().all().when().get("/person/{id}", p1.getP_id()).then().log().body();
+        given().log().all().when().get("/xxx/person/{id}", p1.getP_id()).then().log().body();
         given()
                 .contentType("application/json")
-                .get("/person/{id}", p1.getP_id()).then()
+                .get("/xxx/person/{id}", p1.getP_id()).then()
                 .assertThat()
                 .statusCode(HttpStatus.OK_200.getStatusCode())
                 .body("firstName", equalTo(p1.getFirstName()));
     }
 
+    // Error Test examples
+    @Test
+    public void testPersonByIdError() {
+        int id = 100000;
+        given()
+                .contentType("application/json")
+                .get("/xxx/person/{id}", id)
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.NOT_FOUND_404.getStatusCode())
+                .body("message", equalTo("No person on the given ID: " + id));
+    }
 }
+
