@@ -42,14 +42,14 @@ public class PersonDTO{
         this.address = address;
     }
 
-    public PersonDTO(String firstName, String lastName, String email) {
+    public PersonDTO(String firstName, String lastName, String email, AddressDTO address) {
         this.id = -1; // er det blevet persistet?
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phones = new ArrayList<PhoneDTO>();
         this.hobbies = new ArrayList<HobbyDTO>();
-        this.address = null;
+        this.address = address;
     }
 
     public void setEmail(String email) {
@@ -115,7 +115,7 @@ public class PersonDTO{
                 ", email='" + email + '\'' +
                 ", phones=" + phones +
                 ", hobbies=" + hobbies +
-                ", adress=" + address +
+                ", address=" + address +
                 '}';
     }
 

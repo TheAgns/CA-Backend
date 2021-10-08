@@ -66,7 +66,7 @@ public class PersonFacade {
 
 
         System.out.println(personDTO);
-        //Adding Adress
+        //Adding Address
             Address address = new Address(personDTO.getAddress().getStreet(), personDTO.getAddress().getAdditionalInfo());
 
             //adding CityInfo
