@@ -111,6 +111,14 @@ public class Person {
         }
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPhones(List<Phone> phones) {
+        this.phones = phones;
+    }
+
     @Override
     public String toString() {
         return "Person{" +

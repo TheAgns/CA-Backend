@@ -1,5 +1,7 @@
 package entities;
 
+import dtos.PhoneDTO;
+
 import javax.persistence.*;
 
 @Entity
@@ -35,6 +37,10 @@ public class Phone {
     public Phone(String phoneNumber, String description) {
         this.phoneNumber = phoneNumber;
         this.description = description;
+    }
+    public Phone(PhoneDTO phoneDTO) {
+        this.phoneNumber = phoneDTO.getPhoneNumber();
+        this.description = phoneDTO.getDescription();
     }
 
     public Integer getId() {

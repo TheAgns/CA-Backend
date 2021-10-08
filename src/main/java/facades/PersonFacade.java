@@ -42,14 +42,12 @@ public class PersonFacade {
     }
 
 
-
-
     public PersonDTO addPerson(PersonDTO personDTO) {
         EntityManager em = emf.createEntityManager();
-        Person person = new Person(personDTO.getFirstName(),personDTO.getLastName(),personDTO.getEmail());
+        Person person = new Person(personDTO.getFirstName(), personDTO.getLastName(), personDTO.getEmail());
 
         //adding Phone/phones
-        if(personDTO.getPhones() != null) {
+        if (personDTO.getPhones() != null) {
             for (PhoneDTO phoneDTO : personDTO.getPhones()) {
                 Phone phone = new Phone(phoneDTO.getPhoneNumber(), phoneDTO.getDescription());
                 person.addPhone(phone);
@@ -57,7 +55,7 @@ public class PersonFacade {
         }
 
         //Adding hobby/hobbies
-        if(personDTO.getHobbies() != null) {
+        if (personDTO.getHobbies() != null) {
             for (HobbyDTO hobbyDTO : personDTO.getHobbies()) {
                 Hobby hobby = new Hobby(hobbyDTO.getName(), hobbyDTO.getDescription());
                 person.addHobby(hobby);
@@ -67,15 +65,14 @@ public class PersonFacade {
 
         System.out.println(personDTO);
         //Adding Address
-            Address address = new Address(personDTO.getAddress().getStreet(), personDTO.getAddress().getAdditionalInfo());
+        Address address = new Address(personDTO.getAddress().getStreet(), personDTO.getAddress().getAdditionalInfo());
 
-            //adding CityInfo
-            CityInfo cityInfo = new CityInfo(personDTO.getAddress().getCityInfoDTO().getZipCode(), personDTO.getAddress().getCityInfoDTO().getCity());
+        //adding CityInfo
+        CityInfo cityInfo = new CityInfo(personDTO.getAddress().getCityInfoDTO().getZipCode(), personDTO.getAddress().getCityInfoDTO().getCity());
 
-            address.addPerson(person);
-            //address.setCityInfo(cityInfo);
-            cityInfo.addAddress(address);
-
+        address.addPerson(person);
+        //address.setCityInfo(cityInfo);
+        cityInfo.addAddress(address);
 
 
         try {
@@ -115,22 +112,22 @@ public class PersonFacade {
         return new PersonDTO(em.find(Person.class, id));
     }
 
-    public List<PersonDTO> getAllPersons() throws WebApplicationException{
+    public List<PersonDTO> getAllPersons() throws WebApplicationException {
         EntityManager em = emf.createEntityManager();
         try {
             TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p", Person.class);
             List<Person> persons = query.getResultList();
             return PersonDTO.getDtos(persons);
-        }catch (NoResultException e){
+        } catch (NoResultException e) {
             throw new WebApplicationException("No persons to be shown", 404);
 
         }
     }
 
-    public long getPersonCount(){
+    public long getPersonCount() {
         EntityManager em = emf.createEntityManager();
         try {
-            long personCount = (long)em.createQuery("SELECT COUNT(p) FROM Person p").getSingleResult();
+            long personCount = (long) em.createQuery("SELECT COUNT(p) FROM Person p").getSingleResult();
             return personCount;
         } finally {
             em.close();
@@ -139,7 +136,7 @@ public class PersonFacade {
 
     //Get all persons with a given hobby
     //fodbold --> List person
-    public List<PersonDTO> getAllPersonsByHobby(String hobby) throws WebApplicationException{
+    public List<PersonDTO> getAllPersonsByHobby(String hobby) throws WebApplicationException {
         EntityManager em = emf.createEntityManager();
         try {
             List<Person> persons = em
@@ -147,10 +144,11 @@ public class PersonFacade {
                     .setParameter("hobby", hobby)
                     .getResultList();
             return PersonDTO.getDtos(persons);
-        }catch(NoResultException e){
+        } catch (NoResultException e) {
             throw new WebApplicationException("No person with the given hobby" + hobby, 404);
         }
     }
+
     public PersonDTO getPersonByNumber(String number) throws WebApplicationException {
         EntityManager em = getEntityManager();
         try {
@@ -163,6 +161,7 @@ public class PersonFacade {
             throw new WebApplicationException("No number" + number, 404);
         }
     }
+
     public PersonDTO getPersonById(Integer id) throws WebApplicationException {
         EntityManager em = getEntityManager();
 
@@ -176,6 +175,7 @@ public class PersonFacade {
             throw new WebApplicationException("No person on the given ID: " + id, 404);
         }
     }
+
     public List<PersonDTO> getPersonsByZip(String zipCode) throws WebApplicationException {
         EntityManager em = emf.createEntityManager();
         try {
@@ -191,17 +191,78 @@ public class PersonFacade {
             em.close();
         }
     }
-    public List <CityInfoDTO> getAllCityInfos() throws WebApplicationException{
+
+    public List<CityInfoDTO> getAllCityInfos() throws WebApplicationException {
         EntityManager em = emf.createEntityManager();
         try {
             TypedQuery<CityInfo> query = em.createQuery("SELECT c FROM CityInfo c", CityInfo.class);
             List<CityInfo> cityInfos = query.getResultList();
             return CityInfoDTO.getDtos(cityInfos);
-        }catch (NoResultException e){
+        } catch (NoResultException e) {
             throw new WebApplicationException("No persons to be shown", 404);
 
         }
     }
 
+    public PersonDTO editPerson(PersonDTO p) {
+        EntityManager em = getEntityManager();
+        Person editPerson = em.find(Person.class, p.getId());
 
+        if (editPerson == null) {
+            throw new WebApplicationException(String.format("Person with id: (%d) not found", p.getId()),
+                    400);
+        }
+
+        editPerson.setEmail(p.getEmail());
+        editPerson.setFirstName(p.getFirstName());
+        editPerson.setLastName(p.getLastName());
+
+        // Edit phones
+        for (int i = 0; i < p.getPhones().size(); i++) {
+            PhoneDTO phoneDTO = p.getPhones().get(i);
+            try {
+                Phone phone = editPerson.getPhones().get(i);
+                phone.setPhoneNumber(phoneDTO.getPhoneNumber());
+                phone.setDescription(phoneDTO.getDescription());
+            } catch (IndexOutOfBoundsException e) {
+                //If a phone that doesnt already exist has been added, this will be thrown
+                editPerson.addPhone(new Phone(phoneDTO));
+            }
+        }
+        editPerson.getHobbies().clear();
+        for (int i = 0; i < p.getHobbies().size(); i++) {
+            HobbyDTO hobbyDTO = p.getHobbies().get(i);
+
+            try {
+                Hobby foundHobby = em
+                        .createQuery("SELECT h FROM Hobby h WHERE h.name = :hobby", Hobby.class)
+                        .setParameter("hobby", hobbyDTO.getName())
+                        .getSingleResult();
+                editPerson.addHobby(foundHobby);
+            } catch (NoResultException error) {
+                throw new WebApplicationException("Hobby: " + hobbyDTO.getName() + ", does not exist",
+                        400);
+            }
+        }
+
+
+            // create a new address
+            Address newAddress = new Address(p.getAddress().getStreet(), p.getAddress().getAdditionalInfo());
+            CityInfo cityInfo = new CityInfo(p.getAddress().getCityInfoDTO().getZipCode(), p.getAddress().getCityInfoDTO().getCity());
+            if (cityInfo == null) {
+                throw new WebApplicationException(
+                        "Zipcode: " + p.getAddress().getCityInfoDTO().getZipCode() + ", does not exist", 404);
+            }
+            newAddress.setCityInfo(cityInfo);
+            editPerson.setAddress(newAddress);
+
+        try {
+            em.getTransaction().begin();
+            em.merge(editPerson);
+            em.getTransaction().commit();
+            return new PersonDTO(editPerson);
+        } finally {
+            em.close();
+        }
+    }
 }

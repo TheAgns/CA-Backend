@@ -30,7 +30,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 public class PersonResourceTest {
 
     private static final int SERVER_PORT = 7777;
-    private static final String SERVER_URL = "http://localhost:8080/devops_starter_war_exploded/api";
+    private static final String SERVER_URL = "http://localhost/api";
     private static Person p1, p2;
 
     static final URI BASE_URI = UriBuilder.fromUri(SERVER_URL).port(SERVER_PORT).build();

@@ -110,6 +110,21 @@ public class PersonResource {
         List<CityInfoDTO> cityInfoDTOS = FACADE.getAllCityInfos();
         return GSON.toJson(cityInfoDTOS);
     }
+    @Path("{id}")
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String editPerson(@PathParam("id") int id, String person) {
+        try {
+            PersonDTO personDTOEditInfo = GSON.fromJson(person, PersonDTO.class); //manual conversion
+            personDTOEditInfo.setId(id);
+            personDTOEditInfo = FACADE.editPerson(personDTOEditInfo);
+            return GSON.toJson(personDTOEditInfo);
+        } catch (WebApplicationException ex) {
+            String errorString = "{\"code\": " + ex.getResponse().getStatus() + ", \"message\": \"" + ex.getMessage() + "\"}";
+            return errorString;
+        }
+    }
 
 
 }
