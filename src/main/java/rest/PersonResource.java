@@ -59,6 +59,8 @@ public class PersonResource {
     public String addPerson(String person) {
 
         PersonDTO personDTO = GSON.fromJson(person,PersonDTO.class);
+       // PersonDTO personDTO1 = new PersonDTO(personDTO.getFirstName(),personDTO.getLastName(),personDTO.getEmail(),personDTO.getAddress());
+        //PersonDTO personDTO2 = FACADE.addPerson(personDTO1);
         PersonDTO personDTO1 = FACADE.addPerson(personDTO);
 
         return GSON.toJson(personDTO1);
