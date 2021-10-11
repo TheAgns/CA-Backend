@@ -65,6 +65,7 @@ public class PersonDTO{
     }
 
     public PersonDTO(Person person) {
+        this.id = person.getP_id();
         this.firstName = person.getFirstName();
         this.lastName = person.getLastName();
         this.email = person.getEmail();

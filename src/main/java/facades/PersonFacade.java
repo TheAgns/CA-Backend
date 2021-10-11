@@ -207,7 +207,7 @@ public class PersonFacade {
     public PersonDTO editPerson(PersonDTO p) {
         EntityManager em = getEntityManager();
         Person editPerson = em.find(Person.class, p.getId());
-
+        System.out.println(p.getHobbies());
         if (editPerson == null) {
             throw new WebApplicationException(String.format("Person with id: (%d) not found", p.getId()),
                     400);
@@ -229,20 +229,9 @@ public class PersonFacade {
                 editPerson.addPhone(new Phone(phoneDTO));
             }
         }
-        editPerson.getHobbies().clear();
         for (int i = 0; i < p.getHobbies().size(); i++) {
-            HobbyDTO hobbyDTO = p.getHobbies().get(i);
-
-            try {
-                Hobby foundHobby = em
-                        .createQuery("SELECT h FROM Hobby h WHERE h.name = :hobby", Hobby.class)
-                        .setParameter("hobby", hobbyDTO.getName())
-                        .getSingleResult();
-                editPerson.addHobby(foundHobby);
-            } catch (NoResultException error) {
-                throw new WebApplicationException("Hobby: " + hobbyDTO.getName() + ", does not exist",
-                        400);
-            }
+               Hobby hobby = editPerson.getHobbies().get(i);
+                editPerson.addHobby(hobby);
         }
 
 
