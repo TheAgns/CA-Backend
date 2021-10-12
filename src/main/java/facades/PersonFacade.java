@@ -207,7 +207,7 @@ public class PersonFacade {
     public PersonDTO editPerson(PersonDTO p) {
         EntityManager em = getEntityManager();
         Person editPerson = em.find(Person.class, p.getId());
-        System.out.println(p.getHobbies());
+        System.out.println(p.getHobbies().size());
         if (editPerson == null) {
             throw new WebApplicationException(String.format("Person with id: (%d) not found", p.getId()),
                     400);
@@ -230,7 +230,8 @@ public class PersonFacade {
             }
         }
         for (int i = 0; i < p.getHobbies().size(); i++) {
-               Hobby hobby = editPerson.getHobbies().get(i);
+               HobbyDTO hobbyDTO = p.getHobbies().get(i);
+               Hobby hobby = new Hobby(hobbyDTO.getName(), hobbyDTO.getDescription());
                 editPerson.addHobby(hobby);
         }
 
